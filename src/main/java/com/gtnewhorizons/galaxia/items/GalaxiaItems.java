@@ -20,7 +20,10 @@ public class GalaxiaItems {
 
         TELEPORTER("teleporter", 64, ItemTeleporter::new, (item) -> GameRegistry
             .addShapedRecipe(new ItemStack(item), "III", "IEI", "III", 'I', Items.iron_ingot, 'E', Items.ender_pearl)),
-        ANOTHER_THING("anotherThing");
+        ANOTHER_THING("anotherThing"),
+        MODULEDEBUG("moduledebug",  ItemCargoDebug::new);
+
+
 
         private final String registryName;
         private final int maxStackSize;

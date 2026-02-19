@@ -1,5 +1,6 @@
 package com.gtnewhorizons.galaxia.block;
 
+import com.gtnewhorizons.galaxia.cargo.CargoBlock;
 import net.minecraft.block.Block;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -14,7 +15,10 @@ public class GalaxiaBlocks {
         CALX_ROCK(new BlockCalxRock("calxRock")),
 
         DUNIA_SAND(new BlockDuniaSand("duniaSand")),
-        DUNIA_ROCK(new BlockDuniaRock("duniaRock"));
+        DUNIA_ROCK(new BlockDuniaRock("duniaRock")),
+        CARGO_BLOCK(new CargoBlock());
+
+
 
         private final Block block;
         private final String blockName;

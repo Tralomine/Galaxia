@@ -1,5 +1,6 @@
 package com.gtnewhorizons.galaxia;
 
+import com.gtnewhorizons.galaxia.cargo.CargoTest;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -52,6 +53,7 @@ public class Galaxia {
             .registerMessage(TeleportRequestPacket.Handler.class, TeleportRequestPacket.class, packetId++, Side.SERVER);
         GalaxiaItems.registerAll();
         GalaxiaBlocks.registerAll();
+        CargoTest.registerCargo();
     }
 
     @Mod.EventHandler
