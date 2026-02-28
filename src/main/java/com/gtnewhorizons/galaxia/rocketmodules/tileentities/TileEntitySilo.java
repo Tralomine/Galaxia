@@ -1,6 +1,7 @@
 package com.gtnewhorizons.galaxia.rocketmodules.tileentities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,12 +24,14 @@ import com.cleanroommc.modularui.value.sync.InteractionSyncHandler;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.layout.Flow;
-import com.gtnewhorizons.galaxia.rocketmodules.ModuleRegistry;
+import com.gtnewhorizons.galaxia.rocketmodules.ModuleType;
+import com.gtnewhorizons.galaxia.rocketmodules.RocketAssembly;
 import com.gtnewhorizons.galaxia.rocketmodules.entities.EntityRocket;
 
 public class TileEntitySilo extends TileEntity implements IGuiHolder<PosGuiData> {
 
     private EntityRocket entityRocket;
+    private RocketAssembly assembly;
 
     private final List<Integer> modules = new ArrayList<>();
     public boolean shouldRender = true;
@@ -46,6 +49,7 @@ public class TileEntitySilo extends TileEntity implements IGuiHolder<PosGuiData>
                     .child(createModuleButton(0, "Fuel Tank"))
                     .child(createModuleButton(1, "Capsule"))
                     .child(createModuleButton(2, "Storage Unit"))
+                    .child(createModuleButton(3, "Engine"))
                     .pos(10, 35))
             .child(
                 new ButtonWidget<>().size(190, 30)
@@ -53,9 +57,15 @@ public class TileEntitySilo extends TileEntity implements IGuiHolder<PosGuiData>
                     .overlay(
                         IKey.str("§aEnter Rocket")
                             .alignment(Alignment.CENTER))
-                    .tooltip(
-                        t -> t.add(
-                            hasCapsule() ? "Sit in the capsule and launch the rocket" : "§cRequires Capsule module"))
+                    .tooltip(t -> {
+                        if (!hasCapsule()) {
+                            t.add("§cRequires Capsule module");
+                        } else if (!hasCorrectEngines()) {
+                            t.add("§cRequires 1 engine per tank stack");
+                        } else {
+                            t.add("Sit in the capsule and launch the rocket");
+                        }
+                    })
                     .syncHandler(new InteractionSyncHandler().setOnMousePressed(mouseData -> {
                         if (mouseData.mouseButton != 0 || worldObj.isRemote) return;
                         enterRocket(data);
@@ -75,15 +85,15 @@ public class TileEntitySilo extends TileEntity implements IGuiHolder<PosGuiData>
     }
 
     private ButtonWidget<?> createModuleButton(int id, String name) {
-        ModuleRegistry.ModuleInfo info = ModuleRegistry.getModule(id);
-        String heightStr = info != null ? String.format("%.1fm", info.height()) : "??m";
+        ModuleType type = ModuleType.fromId(id);
+        String heightStr = type != null ? String.format("%.1fm", type.getHeight()) : "??m";
 
         return new ButtonWidget<>().syncHandler(new InteractionSyncHandler().setOnMousePressed(mouseData -> {
             if (mouseData.mouseButton == 0) {
                 addModule(id);
             }
         }))
-            .size(62, 20)
+            .size(48, 20)
             .overlay(IKey.str(name))
             .tooltip((t) -> t.add("Add " + name + " (" + heightStr + ")"));
     }
@@ -97,13 +107,34 @@ public class TileEntitySilo extends TileEntity implements IGuiHolder<PosGuiData>
         return modules.contains(1);
     }
 
+    public boolean hasCorrectEngines() {
+        return ((double) getTankCount() / getEngineCount()) - (Math.floor((double) getTankCount() / getEngineCount()))
+            == 0;
+    }
+
     public int getFirstCapsuleIndex() {
         return modules.indexOf(1);
     }
 
+    public int getEngineCount() {
+        return Collections.frequency(modules, 3);
+    }
+
+    public int getTankCount() {
+        return Collections.frequency(modules, 0);
+    }
+
     public void addModule(int type) {
         modules.add(type);
+        assembly = null;
         markDirty();
+    }
+
+    public RocketAssembly getAssembly() {
+        if (assembly == null) {
+            assembly = new RocketAssembly(getModules());
+        }
+        return assembly;
     }
 
     @Override
