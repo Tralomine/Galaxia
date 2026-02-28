@@ -31,29 +31,11 @@ public class TileNoduleController extends TileEntity implements IGuiHolder<PosGu
         this.isDepressurized = false;
         int x = this.xCoord, y = this.yCoord, z = this.zCoord;
         Block spaceAir = Block.getBlockFromName("galaxia:space_air");
-        if (BlockSpaceAir.isDepressurized(this.worldObj, x + 1, y, z)) {
-            this.worldObj.setBlock(x + 1, y, z, spaceAir, 2, 2);
-            this.worldObj.notifyBlockOfNeighborChange(x + 1, y, z, spaceAir);
-        }
-        if (BlockSpaceAir.isDepressurized(this.worldObj, x - 1, y, z)) {
-            this.worldObj.setBlock(x - 1, y, z, spaceAir, 2, 2);
-            this.worldObj.notifyBlockOfNeighborChange(x - 1, y, z, spaceAir);
-        }
-        if (BlockSpaceAir.isDepressurized(this.worldObj, x, y, z + 1)) {
-            this.worldObj.setBlock(x, y, z + 1, spaceAir, 2, 2);
-            this.worldObj.notifyBlockOfNeighborChange(x, y, z + 1, spaceAir);
-        }
-        if (BlockSpaceAir.isDepressurized(this.worldObj, x, y, z - 1)) {
-            this.worldObj.setBlock(x, y, z - 1, spaceAir, 2, 2);
-            this.worldObj.notifyBlockOfNeighborChange(x, y, z - 1, spaceAir);
-        }
-        if (BlockSpaceAir.isDepressurized(this.worldObj, x, y + 1, z)) {
-            this.worldObj.setBlock(x, y + 1, z, spaceAir, 2, 2);
-            this.worldObj.notifyBlockOfNeighborChange(x, y + 1, z, spaceAir);
-        }
-        if (BlockSpaceAir.isDepressurized(this.worldObj, x, y - 1, z)) {
-            this.worldObj.setBlock(x, y - 1, z, spaceAir, 2, 2);
-            this.worldObj.notifyBlockOfNeighborChange(x, y - 1, z, spaceAir);
+        for (int[] d : BlockSpaceAir.adjacents) {
+            if (BlockSpaceAir.isDepressurized(this.worldObj, x + d[0], y + d[1], z + d[2])) {
+                this.worldObj.setBlock(x + d[0], y + d[1], z + d[2], spaceAir, 2, 2);
+                this.worldObj.notifyBlockOfNeighborChange(x + d[0], y + d[1], z + d[2], spaceAir);
+            }
         }
     }
 
