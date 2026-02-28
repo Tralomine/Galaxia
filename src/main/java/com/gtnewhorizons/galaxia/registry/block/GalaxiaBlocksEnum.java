@@ -10,6 +10,7 @@ import com.gtnewhorizons.galaxia.registry.block.base.BlockSpaceAir;
 import com.gtnewhorizons.galaxia.registry.block.base.BlockSpaceStation;
 import com.gtnewhorizons.galaxia.registry.block.base.BlockSpaceStationGlass;
 import com.gtnewhorizons.galaxia.registry.block.base.BlockVariant;
+import com.gtnewhorizons.galaxia.registry.block.tile.TileNoduleController;
 import com.gtnewhorizons.galaxia.registry.dimension.DimensionEnum;
 import com.gtnewhorizons.galaxia.registry.items.GalaxiaItemList;
 import com.gtnewhorizons.galaxia.rocketmodules.tileentities.BlockSilo;
@@ -43,6 +44,7 @@ public enum GalaxiaBlocksEnum {
         }
 
         GameRegistry.registerTileEntity(TileEntitySilo.class, "galaxia_silo_controller");
+        GameRegistry.registerTileEntity(TileNoduleController.class, "galaxia_nodule_controller");
     }
 
     // spotless:off
