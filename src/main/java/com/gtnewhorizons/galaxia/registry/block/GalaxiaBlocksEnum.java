@@ -13,7 +13,9 @@ import com.gtnewhorizons.galaxia.registry.block.base.BlockVariant;
 import com.gtnewhorizons.galaxia.registry.block.tile.TileNoduleController;
 import com.gtnewhorizons.galaxia.registry.dimension.DimensionEnum;
 import com.gtnewhorizons.galaxia.registry.items.GalaxiaItemList;
+import com.gtnewhorizons.galaxia.rocketmodules.tileentities.BlockModuleAssembler;
 import com.gtnewhorizons.galaxia.rocketmodules.tileentities.BlockSilo;
+import com.gtnewhorizons.galaxia.rocketmodules.tileentities.TileEntityModuleAssembler;
 import com.gtnewhorizons.galaxia.rocketmodules.tileentities.TileEntitySilo;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -30,6 +32,7 @@ public enum GalaxiaBlocksEnum {
     SPACE_STATION_BLOCK(new BlockSpaceStation(), "space_station_block"),
     SPACE_STATION_GLASS(new BlockSpaceStationGlass(), "space_station_glass"),
     SPACE_AIR(new BlockSpaceAir(), "space_air"),
+    ASSEMBLER_CONTROLLER(new BlockModuleAssembler(), "module_assembler_controller")
     ; // leave trailing semicolon
 
     // spotless:on
@@ -45,6 +48,7 @@ public enum GalaxiaBlocksEnum {
 
         GameRegistry.registerTileEntity(TileEntitySilo.class, "galaxia_silo_controller");
         GameRegistry.registerTileEntity(TileNoduleController.class, "galaxia_nodule_controller");
+        GameRegistry.registerTileEntity(TileEntityModuleAssembler.class, "galaxia_module_assembler_controller");
     }
 
     // spotless:off
