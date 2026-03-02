@@ -120,7 +120,7 @@ public class BlockSpaceAir extends Block {
         boolean doSmoke = random.nextFloat() > 0.98;
         for (int[] d : adjacents) {
             if (worldIn.getBlock(x + d[0], y + d[1], z + d[2]) == Blocks.air) {
-                smokeDir = new double[] {smokeDir[0] - d[0], smokeDir[1] - d[1], smokeDir[2] - d[2]};
+                smokeDir = new double[] { smokeDir[0] - d[0], smokeDir[1] - d[1], smokeDir[2] - d[2] };
                 doSmoke = true;
             }
         }

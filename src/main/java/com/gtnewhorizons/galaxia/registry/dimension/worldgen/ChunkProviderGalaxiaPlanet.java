@@ -73,7 +73,8 @@ public class ChunkProviderGalaxiaPlanet implements IChunkProvider {
         BiomeGenBase[] chunkBiomes = new BiomeGenBase[256];
         double[][] biomeContrib = new double[biomeCount][];
         List<BiomeGenBase> biomeList = new ArrayList<>();
-        // between 0 and 1, smooth range between biome (0 is not smoothed, vertical cliffs, 1 is indistinguishable between biomes)
+        // between 0 and 1, smooth range between biome (0 is not smoothed, vertical cliffs, 1 is indistinguishable
+        // between biomes)
         final double allowedDivergence = 1;
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
